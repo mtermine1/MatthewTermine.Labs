@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=3 uid="uid://df125pf6ggm6k"]
+
+[ext_resource type="Script" uid="uid://2xj7yy1hdry" path="res://character_body_3d.gd" id="1_glv2v"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rxg2q"]
+sky_top_color = Color(0.28549927, 0.45265728, 0.6871877, 1)
+sky_horizon_color = Color(0.5797217, 0.6629219, 0.72495073, 1)
+ground_bottom_color = Color(0.034319658, 0.19996253, 0.2135475, 1)
+ground_horizon_color = Color(0.5797217, 0.6629219, 0.72495073, 1)
+energy_multiplier = 1.5
+
+[sub_resource type="Sky" id="Sky_glv2v"]
+sky_material = SubResource("ProceduralSkyMaterial_rxg2q")
+
+[sub_resource type="Environment" id="Environment_uu6xs"]
+background_mode = 2
+sky = SubResource("Sky_glv2v")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0du0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_glv2v"]
+material = SubResource("StandardMaterial3D_r0du0")
+size = Vector3(20, 1, 20)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rxg2q"]
+radius = 0.001
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_glv2v"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uu6xs"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_r0du0"]
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.007885933, 0.024375796)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_uu6xs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_glv2v")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2888463, 5.49074)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2051754, 0.8814491, 4.6922865)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3526459, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("SphereShape3D_rxg2q")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("CapsuleMesh_glv2v")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(0.99998134, -0.006126046, 0, 0.006126046, 0.99998134, 0, 0, 0, 1, 0.0003914777, -0.06390262, 0)
+use_collision = true
+size = Vector3(20, 0.8721924, 20)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.355635, 0.69326735, 0)
+script = ExtResource("1_glv2v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CylinderShape3D_uu6xs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+mesh = SubResource("CylinderMesh_r0du0")
